@@ -1,4 +1,7 @@
-How many orders were placed in January?
+#In this SQL, I'm querying a database with multiple tables in it to view statistics about customers and order data. 
+
+
+#How many orders were placed in January?
 
 
 SELECT COUNT(orderid)
