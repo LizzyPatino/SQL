@@ -1,0 +1,72 @@
+#For this project I downloaded the data below from Kaggle 
+#Then I created a table to insert Spotify data into 
+#I then used SQL to analyze the data below
+
+#Top 50 Spotify songs
+
+CREATE TABLE BIT_DB.Spotifydata (
+id integer PRIMARY KEY,
+artist_name varchar NOT NULL,
+track_name varchar NOT NULL,
+track_id varchar NOT NULL,
+popularity integer NOT NULL,
+danceability decimal(4,3) NOT NULL,
+energy decimal(4,3) NOT NULL,
+song_key integer NOT NULL,
+loudness decimal(5,3) NOT NULL,
+song_mode integer NOT NULL,
+speechiness decimal(5,4) NOT NULL,
+acousticness decimal(6,5) NOT NULL,
+instrumentalness decimal(8,7) NOT NULL,
+liveness decimal(5,4) NOT NULL,
+valence decimal(4,3) NOT NULL,
+tempo decimal(6,3) NOT NULL,
+duration_ms integer NOT NULL,
+time_signature integer NOT NULL )
+
+# What are the top 5 most popular songs based on popularity rating, and who are the artists?
+ 
+SELECT track_name, artist_name
+FROM BIT_DB.Spotifydata
+ORDER BY popularity DESC LIMIT 5;
+
+#Which artists are on the top 50 list more than once?
+
+SELECT  artist_name, COUNT (*)
+FROM BIT_DB.Spotifydata
+GROUP BY artist_name
+HAVING COUNT(*) >=2 
+ORDER BY COUNT(*) ASC;
+
+
+# What track is the #10 most popular on the Top 50 and who is the artist?
+
+SELECT track_name,artist_name
+FROM BIT_DB.Spotifydata
+WHERE id=10;
+
+# What is the percent of likely dancibility for the top 5 most popular songs?
+
+SELECT track_name, ROUND( danceability*100) as danceability_percent
+FROM BIT_DB.Spotifydata
+GROUP BY danceability
+HAVING  id <= 5
+ORDER BY danceability desc;
+
+# Which song is the longest song? Who is the artist and where are they on the chart?
+
+SELECT  MAX(duration_ms), track_name, id,artist_name
+FROM BIT_DB.Spotifydata;
+
+
+
+
+
+
+
+
+
+
+
+
+
