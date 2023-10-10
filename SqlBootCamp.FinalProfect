@@ -1,0 +1,74 @@
+#For this project I am using a dataset called chinook, which represents a digital media store 
+#and includes tables for artists, albums, media tracks, invoices, and customers.
+#i have used SQL to analyze the data and answer the following questions. 
+
+# Show all the customers that are outside of the US
+
+SELECT FirstName, LastName, Country
+FROM chinook.customers
+WHERE Country <> 'USA'
+GROUP BY Country;
+
+#Show the employees who are Sales Agents
+
+SELECT FirstName, LastName
+FROM chinook.employees
+WHERE Title= 'Sales Support Agent';
+
+#Show the Employees that report to more than one person. 
+
+SELECT FirstName, LastName
+FROM chinook.employees
+WHERE ReportsTo >1
+
+# Show all the Albums from the artist AC/DC.
+
+SELECT album.Title
+FROM chinook.albums album
+INNER LEFT JOIN chinook.artists artist
+WHERE artist.ArtistID=album.AlbumID
+AND artist.name= 'AC/DC';
+
+# Show the artist and the name of their albums
+
+SELECT ar.name, al.ArtistID, al.Title
+FROM chinook.albums al
+INNER LEFT JOIN chinook.artists ar
+WHERE ar.ArtistID=al.AlbumID
+GROUP BY ar.name;
+
+# Show an example of an aritst for each Genre
+
+SELECT gen.Name AS Genre, art.Name
+FROM chinook.genres gen
+INNER LEFT JOIN chinook.artists art
+WHERE gen.GenreID=art.ArtistID
+GROUP BY gen.Name
+
+#Show all the tracks that are in the Jazz Genre
+
+SELECT tr.Name
+FROM chinook.tracks tr
+INNER LEFT JOIN chinook.genres gen
+WHERE gen.GenreID=tr.GenreID
+AND gen.Name= 'Jazz'
+
+
+# Show all the Invoice dates that were made in the USA, and the names of the customers. 
+
+SELECT cust.FirstName, cust.LastName, inv.InvoiceDate
+FROM chinook.invoices inv
+INNER LEFT JOIN chinook.customers cust
+WHERE inv.CustomerID = cust.Customerid
+AND inv.BillingCountry = 'USA'
+ORDER BY inv.InvoiceDate ASC;
+
+
+
+
+
+
+
+
+
+
